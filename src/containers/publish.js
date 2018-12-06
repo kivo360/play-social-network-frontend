@@ -7,11 +7,14 @@ import EditableTagGroups from "../components/edit-tags";
 import { ColSizing } from '../misc/data/generalProps';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import view from '../redux/slices/views';
+
 // Should only have columns left at the end
 import { columns, placehold } from '../misc/data/tableformat';
 
 import * as userServices from '../redux/services/user';
-import { getUser, complexAction } from '../redux/actions/users/base';
+// import { getUser, complexAction } from '../redux/actions/users/base';
 
 // Pull the placeholder data into here
 
@@ -31,6 +34,8 @@ function handleChange(value) {
 class PublishPost extends PureComponent {
   constructor(props){
     super(props);
+    this.props.views.clearPostTab()
+    this.props.views.setCurrentView("publish")
     // this.props.complexAction();
     // console.log(props)
 
@@ -79,7 +84,7 @@ const mapStateToProps = state => ({
  })
 
  const mapDispatchToProps = dispatch => ({
-  complexAction: () => dispatch(complexAction)
+  views: bindActionCreators(view.actions, dispatch) 
  })
  
   const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(PublishPost)

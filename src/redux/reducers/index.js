@@ -1,11 +1,9 @@
 import { combineReducers } from 'redux';
-import user from './userReducer';
-import billing from './billingReducer';
-import base from './baseReducer';
-
+// import base from './baseReducer';
+import views from '../slices/views';
+import user from '../slices/user';
 
 export default combineReducers({
-    user,
-    billing,
-    base
+    user: user.reducer,
+    view: views.reducer 
 });

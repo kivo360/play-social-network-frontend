@@ -10,14 +10,14 @@ class AdaptiveContainer extends PureComponent {
     return (
       <div style={{paddingTop:"2rem", paddingDown:"2rem"}}>
         <Row gutter={24}>
-            <Col xs={24} sm={4} md={2} lg={4} xl={3}></Col>
+            <Col xs={1} sm={4} md={2} lg={4} xl={3}></Col>
             <Col 
-              xs={24} sm={16} md={20} lg={16} xl={18}
+              xs={22} sm={16} md={20} lg={16} xl={18}
               style={{padding:"0 1rem"}}
             >
               {this.props.children}
             </Col>
-            <Col xs={24} sm={4} md={2} lg={4} xl={3}></Col>
+            <Col xs={1} sm={4} md={2} lg={4} xl={3}></Col>
         </Row>
     </div>
     )
@@ -62,14 +62,14 @@ export class AdaptiveCardGridContainer extends PureComponent {
     return (
       <div style={{padding:"2rem"}} >
         <Row gutter={16}>
-            <Col xs={24} sm={2} md={4} lg={6} xl={6}></Col>
+            <Col xs={1} sm={2} md={4} lg={6} xl={6}></Col>
             <Col 
               xs={24} sm={20} md={16} lg={12} xl={12}
               style={{padding:"0 1rem"}}
             >
               {this.props.children}
             </Col>
-            <Col xs={24} sm={2} md={4} lg={6} xl={6}></Col>
+            <Col xs={1} sm={2} md={4} lg={6} xl={6}></Col>
         </Row>
     </div>
     )

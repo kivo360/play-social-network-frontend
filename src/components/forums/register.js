@@ -117,7 +117,6 @@ import {
             <Button type="primary" htmlType="submit" className="login-form-button">
               Register
             </Button>
-            Or <a href=""> login now!</a>
           </FormItem>
         </Form>
       );

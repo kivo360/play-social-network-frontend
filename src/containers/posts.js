@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { AdaptiveCardGridContainer } from '../components/adaptive';
 import { NubitCard } from '../components/posts/card';
+import view from '../redux/slices/views'
+import { bindActionCreators } from 'redux'
 
 
 // Should only have columns left at the end
@@ -82,17 +84,27 @@ class PostList extends PureComponent {
     }else{
       this.state.tag = prm.tag;
     }
-    
+    props.views.setPostTab(prm.tag)
+    this.props.views.setCurrentView("postlist")
+    // this.props.setPostTab(this.state.tag);
+
+    // console.log(viewActions.setPostTab)
+    // console.log(this.props.setPostTab(this.state.tag))
+    // viewActions.setCurrentView('postList');
     // this.forceUpdate();
   }
 
   componentWillUpdate(nextProps, nextState){
     // console.log(nextProps);
+    // console.log(nextState)
     const prm = nextProps.match.params;
     if (!('tag' in prm)){
       this.setState({tag:"general"});
+      this.props.views.setPostTab("general");
     }else{
       this.setState({tag:prm.tag});
+      this.props.views.setPostTab(prm.tag)
+      // this.props.setPostTab(prm.tag);
     }
 
     // Set the event saying we're on the post page
@@ -148,7 +160,7 @@ const mapStateToProps = state => ({
  })
 
  const mapDispatchToProps = dispatch => ({
-  // complexAction: () => dispatch(complexAction)
+  views: bindActionCreators(view.actions, dispatch) 
  })
  
   const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(PostList)

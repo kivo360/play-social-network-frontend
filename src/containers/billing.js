@@ -9,7 +9,6 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { columns, placehold } from '../misc/data/tableformat';
 
 import * as userServices from '../redux/services/user';
-import { getUser, complexAction } from '../redux/actions/users/base';
 
 // Pull the placeholder data into here
 
@@ -19,7 +18,7 @@ const PaymentBlankSpace = ColSizing.balanceContainer.blankSpace;
 
 
 
-console.log(complexAction)
+// console.log(complexAction)
 
 const content = (
     <div style={{minWidth: '10rem'}}>
@@ -74,7 +73,7 @@ const mapStateToProps = state => ({
  })
 
  const mapDispatchToProps = dispatch => ({
-  complexAction: () => dispatch(complexAction)
+  // complexAction: () => dispatch(complexAction)
  })
  
   const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(Billing)

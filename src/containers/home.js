@@ -1,9 +1,12 @@
-import { Col, Divider, Icon, Input, Popover, Row, Table, Card, List, Button, Pagination } from 'antd';
+import { Button, Card, Icon, List } from 'antd';
 import React, { PureComponent } from 'react';
-import { complexAction } from '../redux/actions/complexActions';
-import AdaptiveContainer, {AdaptiveHalfCol, Adaptive8, Adaptive16, AdaptiveCardGridContainer} from '../components/adaptive';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import AdaptiveContainer, { Adaptive16, Adaptive8, AdaptiveHalfCol } from '../components/adaptive';
 import { NubitCard } from '../components/posts/card';
-const { Meta } = Card;
+import view from '../redux/slices/views';
+
 
 
 const item_list = [
@@ -64,13 +67,15 @@ const tabListNoTitle = [{
 
 
 
-export class Home extends PureComponent {
+class Homes extends PureComponent {
   constructor(props){
     super(props);
 
     this.state = {
       placeholder: 1
     }
+    this.props.views.clearPostTab()
+    this.props.views.setCurrentView("home")
   }
 
   render(){
@@ -123,16 +128,6 @@ export class Home extends PureComponent {
                         _history={this.props.history}/>
                     </List.Item>
                     )}/>
-                <AdaptiveHalfCol>
-                <div style={{padding: "5px"}}>
-                  <Button block>Previous Page</Button>
-                </div>
-              </AdaptiveHalfCol>
-              <AdaptiveHalfCol>
-                <div style={{padding: "5px"}}>
-                  <Button type="primary" block>Next Page</Button>
-                </div>
-              </AdaptiveHalfCol>
             </Card>
         </AdaptiveContainer>
 
@@ -141,67 +136,26 @@ export class Home extends PureComponent {
   }
 }
 
-// // Make sure to have the 
-// export const Home = () => {
-  
-//   return (
-    // <div>
-    //     <div className="welcome-nubit">
-    //       <Icon style={{color: "white", textAlign:"right"}} type="close" />
-    //       <AdaptiveContainer>
-    //         <Adaptive8>
-    //           <h1 style={{color: "white", fontSize:"40px", fontWeight:"bold", fontFamily: "'Open Sans', sans-serif"}}>Your voice is worth something</h1>  
-    //           <p style={{color: "white"}}>Get paid for good content. Post and upvote articles on Steemit to get your share of the daily rewards pool.</p>
-    //           <AdaptiveHalfCol>
-    //             <div style={{padding: "5px"}}>
-    //               <Button block>Sign Up</Button>
-    //             </div>
-    //           </AdaptiveHalfCol>
-    //           <AdaptiveHalfCol>
-    //             <div style={{padding: "5px"}}>
-    //               <Button type="primary" block>Learn More</Button>
-    //             </div>
-    //           </AdaptiveHalfCol>
-    //         </Adaptive8>
-    //         <Adaptive16>
-    //           <div style={{padding: "0 3rem"}}>
-    //             <h1 style={{color: "white", textAlign:"center", fontSize:"60px", fontWeight:"bold", fontFamily: "'Open Sans', sans-serif"}}>[LOGO GOES HERE]</h1>
-    //             <h1 style={{color: "white", textAlign:"center", fontSize:"30px", fontWeight:"bold", fontFamily: "'Open Sans', sans-serif"}}>Share your voice with Bitcoin Cash and Nubit</h1>
-    //           </div>
-              
-    //         </Adaptive16>
+const mapStateToProps = state => ({
+  ...state
+});
 
-    //       </AdaptiveContainer>    
-    //     </div>
-    //     <AdaptiveContainer>
-    //         <Card
-    //           tabList={tabListNoTitle}
-    //         >
-    //           <List grid={{ gutter: 16, xs: 1, sm: 1, md: 2, lg: 2, xl: 3, xxl: 3 }}
-    //               dataSource={item_list}
-    //               renderItem={item => (
-    //               <List.Item>
-    //                   <NubitCard
-    //                     url={item.url}
-    //                     _avatar={item.avatar}
-    //                     _title={item.title}
-    //                     _description={item.description}
-    //                     _pid={item.postId}
-    //                     _history={this.props.history}/>
-    //                 </List.Item>
-    //                 )}/>
-    //             <AdaptiveHalfCol>
-    //             <div style={{padding: "5px"}}>
-    //               <Button block>Previous Page</Button>
-    //             </div>
-    //           </AdaptiveHalfCol>
-    //           <AdaptiveHalfCol>
-    //             <div style={{padding: "5px"}}>
-    //               <Button type="primary" block>Next Page</Button>
-    //             </div>
-    //           </AdaptiveHalfCol>
-    //         </Card>
-    //     </AdaptiveContainer>
 
-    // </div>
-// )}
+
+
+const mapDispatchToProps = dispatch => ({
+  views: bindActionCreators(view.actions, dispatch) 
+ })
+ 
+
+
+
+//  const mapDispatchToProps = dispatch => ({
+//   getUser: () => dispatch(getUser())
+//  })
+ 
+const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(Homes)
+const RouteApp = withRouter(ConnectApp)
+
+export const Home = RouteApp;
+//  Home

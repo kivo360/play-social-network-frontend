@@ -1,11 +1,15 @@
 import { Col, Divider, Icon, Input, Popover, Row, Table,  } from 'antd';
 import React, { PureComponent } from 'react';
-import AdaptiveContainer from '../components/adaptive';
+import AdaptiveContainer, {AdaptiveCardGridContainer} from '../components/adaptive';
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { PostComment } from '../components/posts/comment';
 import { NubitCoverLong } from '../components/posts/card';
-import { complexAction } from '../redux/actions/complexActions';
+import { bindActionCreators } from 'redux';
+import view from '../redux/slices/views';
+
+
+// import { complexAction } from '../redux/actions/complexActions';
 
 // Here we map the call to the global state.
 
@@ -18,6 +22,8 @@ import { complexAction } from '../redux/actions/complexActions';
 class SinglePost extends PureComponent {
   constructor(props){
     super(props);
+    this.props.views.clearPostTab()
+    this.props.views.setCurrentView("post")
     // Get the current page from the params
     // Get more post information
     // Push the post information to the state
@@ -51,7 +57,7 @@ const mapStateToProps = state => ({
  })
 
  const mapDispatchToProps = dispatch => ({
-  complexAction: () => dispatch(complexAction)
+  views: bindActionCreators(view.actions, dispatch) 
  })
  
   const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(SinglePost)

@@ -8,7 +8,10 @@ import LoginForum from "../components/forums/login";
 import RegisterForum from "../components/forums/register";
 import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import { complexAction } from '../redux/actions/complexActions';
+import { bindActionCreators } from 'redux';
+import view from '../redux/slices/views';
+
+// import { complexAction } from '../redux/actions/complexActions';
 
 
 // Pull the placeholder data into here
@@ -64,6 +67,8 @@ class Login extends PureComponent {
   
   constructor(props){
     super(props);
+    this.props.views.clearPostTab()
+    this.props.views.setCurrentView("login")
     // this.props.complexAction();
     // console.log(props)
     // Update the current page using redux
@@ -106,8 +111,9 @@ const mapStateToProps = state => ({
  })
 
  const mapDispatchToProps = dispatch => ({
-  complexAction: () => dispatch(complexAction)
+  views: bindActionCreators(view.actions, dispatch) 
  })
+ 
  
   const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(Login)
   const RouteApp = withRouter(ConnectApp)

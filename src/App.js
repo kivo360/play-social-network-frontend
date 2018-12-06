@@ -8,11 +8,10 @@ import TopicBar  from './components/topicbar';
 import PostList from "./containers/posts";
 import SinglePost from "./containers/post";
 import PublishPost from "./containers/publish";
-import TestFrame from "./containers/test";
+// import TestFrame from "./containers/test";
 import Login from "./containers/login";
 import { Home }  from './containers/home';
-import { complexAction } from './redux/actions/complexActions';
-import { getUser } from './redux/actions/users/base';
+
 import './theme/antd.less';
 
 
@@ -38,16 +37,13 @@ class App extends PureComponent {
         <Layout className="layout">
           <Head/>
           <TopicBar {...this.props}/>
-          <Content 
-            
-          >
-
+          <Content>
             <Switch>
               <Route exact path="/" component={Home}/>
               <Route exact path="/publish" component={PublishPost}/>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/post/:postid" component={SinglePost}/>
-              <Route exact path="/account/:accid" component={TestFrame}/>
+              <Route exact path="/account/:accid" component={SinglePost}/>
               <Route exact path="/view" component={PostList}/>
               <Route exact path="/view/:tag" component={PostList}/>
             </Switch>

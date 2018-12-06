@@ -3,24 +3,27 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+import view from '../redux/slices/views';
 
 
 class TopicBar extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
-            currentMenu: '',
-            currentKey: ''
+            current: ''
         }
     }
 
+    handleClick = (e) => {
+        this.setState({
+          current: e.key,
+        });
+    }
     
 
-    // Components will recieve props
-        // update the current key inside both of the menus
     componentWillUpdate(nextProps, nextState){
-        console.log(nextProps);
-        console.log(nextState);
+        this.setState({current: nextProps.view.postTab}); 
     }
 
     render(){
@@ -31,6 +34,8 @@ class TopicBar extends PureComponent {
                     <Menu
                         mode="horizontal"
                         style={{lineHeight: "30px"}}
+                        onClick={this.handleClick}
+                        selectedKeys={[this.state.current]}
                     >
                         <Menu.Item key="general">
                             <Link to="/view/general">#general</Link>
@@ -69,22 +74,16 @@ class TopicBar extends PureComponent {
 
 const mapStateToProps = state => ({
     ...state
-   })
+});
   
   
   
   
 const mapDispatchToProps = dispatch => ({
-// getUser: () => {dispatch(getUser())}
-});
+    views: bindActionCreators(view.actions, dispatch) 
+})
    
-  
-  
-  
-  //  const mapDispatchToProps = dispatch => ({
-  //   getUser: () => dispatch(getUser())
-  //  })
-   
+
 const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(TopicBar)
 const RouteApp = withRouter(ConnectApp)
 

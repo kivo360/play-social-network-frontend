@@ -1,15 +1,21 @@
+import { configureStore, getDefaultMiddleware } from 'redux-starter-kit'
+import rootReducer from './reducers'
+import logger from 'redux-logger'
+
 /*
  * src/store.js
  * With initialState
 */
-import { createStore, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga'
+// import { createStore, applyMiddleware } from 'redux';
+// import createSagaMiddleware from 'redux-saga'
 
 
-import rootReducer from './reducers';
-import rootSaga from './sagas';
 
-const sagaMiddleware = createSagaMiddleware()
+// import rootReducer from './reducers';
+// import rootSaga from './sagas';
+
+// const sagaMiddleware = createSagaMiddleware()
+const middleware = [...getDefaultMiddleware(), logger]
 
 
 const init = {
@@ -17,16 +23,8 @@ const init = {
   loading: false,
   error: false
 };
+  
 
-function configureStore(initialState=init) {
-
-  return createStore(
-  rootReducer,
-   applyMiddleware(sagaMiddleware)
- );
-}
-
-const store = configureStore();
-sagaMiddleware.run(rootSaga)
+const store = configureStore({ reducer: rootReducer, middleware: middleware, preloadedState: init })
 
 export default store;
