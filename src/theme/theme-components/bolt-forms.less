@@ -1,0 +1,67 @@
+ input.ant-input{
+    margin-top: 1.2rem;
+    background: transparent;
+    border-top: transparent;
+    border-right: transparent;
+    border-left: transparent;
+    font-family: 'Helvetica Neue', 'Helvetica';
+    border-bottom: 2px solid;
+    
+}
+
+input[type="text"].ant-input, input[type="password"].ant-input, input[type="number"].ant-input, textarea.ant-input{
+    font-family: 'Helvetica Neue', 'Helvetica';
+    color: rgb(97, 97, 97);
+    border-radius: 0;
+    font-size: 16px;
+    font-weight: 700;
+
+    &:enabled {
+        color: #616161;
+    }
+
+    &:hover:not(:focus) {
+        color: #808080;
+    }
+
+    &:hover{
+        color: rgb(22, 22, 22);
+        border-bottom: 2px solid rgb(24, 23, 23);
+        border-top: transparent;
+        border-right: transparent;
+        border-left: transparent;
+        box-shadow: 0 0 0px rgba(81, 203, 238, 1);
+    }
+    &:focus{
+        color: rgb(22, 22, 22);
+        border-top: transparent;
+        border-right: transparent;
+        border-left: transparent;
+        box-shadow: 0 0 0px rgba(81, 203, 238, 1);
+    }
+}
+
+.ant-pagination.ant-table-pagination {
+    padding-right: 3rem;
+}
+
+.ant-popover-arrow {
+    background: #484b54;
+}
+
+.ant-popover-inner {
+    background: #484b54;
+    border-radius: 1rem 1rem;
+    padding: 1rem;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.ant-popover-title, .ant-popover-inner-content {
+    color: rgba(231, 231, 231, 0.85);
+}
+
+.ant-popover-inner-content {
+    min-width: 6rem;
+}

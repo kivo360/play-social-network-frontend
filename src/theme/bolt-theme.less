@@ -1,0 +1,39 @@
+@headbg: linear-gradient(#85396d, #74315e );
+@primary-color: #813d6b;
+@primary-highlighted: #ac6193;
+@transparent: rgba(0, 0, 0, 0);
+@hh-item: 34px;
+@hh: 56px;
+// @layout-header-background: @headbg;
+
+@menu-item-height: @hh-item;
+@menu-inline-toplevel-item-height: @hh-item;
+@layout-header-height: @hh;
+
+
+// @menu-inline-toplevel-item-height: 40px;
+// @menu-item-height: 40px;
+@menu-collapsed-width: 80px;
+@menu-bg: @component-background;
+@menu-item-color: @text-color;
+@menu-highlight-color: @primary-color;
+@menu-item-active-bg: @item-active-bg;
+@menu-item-active-border-width: 3px;
+@menu-item-group-title-color: @text-color-secondary;
+
+
+body{
+    font-family: 'Helvetica Neue', 'Helvetica';
+}
+
+.ant-divider-horizontal{
+    margin: 12px 0;
+}
+
+@import "./theme-components/bolt-navigation.less";
+@import "./theme-components/bolt-table.less";
+@import "./theme-components/bolt-forms.less";
+@import "./theme-components/bolt-general.less";
+@import "./theme-components/nubit-specific.less";
+
+
