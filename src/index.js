@@ -5,15 +5,21 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import { Provider } from 'react-redux'
-import globalstore from './redux/store';
-import { BrowserRouter } from 'react-router-dom';
+import {store, persistor} from './redux/store';
+import { BrowserRouter, Router } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react'
+
+import createHistory from 'history/createBrowserHistory';
+
+const history = createHistory();
+
 
 ReactDOM.render(
-    <BrowserRouter basename="/">
-        <Provider store={globalstore}>
+    <Router history={history}>
+        <Provider store={store}>
             <App />
         </Provider>
-    </BrowserRouter>,
+    </Router>,
     document.getElementById('root')
    );
 registerServiceWorker();

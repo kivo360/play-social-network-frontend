@@ -1,16 +1,19 @@
+import { Button, Form, Icon, Input } from 'antd';
 import React from 'react';
-import {
-    Form, Icon, Input, Button, Checkbox,
-  } from 'antd';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import { withRouter } from 'react-router-dom';
+import { loginUser, refreshUser } from '../../redux/actions/calls/user';
+
+const FormItem = Form.Item;
   
-  const FormItem = Form.Item;
-  
-  class NormalLoginForm extends React.Component {
+class NormalLoginForm extends React.Component {
     handleSubmit = (e) => {
       e.preventDefault();
       this.props.form.validateFields((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values);
+          console.log(values);
+          this.props.login(values);
         }
       });
     }
@@ -20,7 +23,7 @@ import {
       return (
         <Form onSubmit={this.handleSubmit} className="login-form">
           <FormItem>
-            {getFieldDecorator('userName', {
+            {getFieldDecorator('username', {
               rules: [{ required: true, message: 'Please input your username!' }],
             })(
               <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
@@ -36,7 +39,7 @@ import {
           <FormItem>
             
             {/* <a className="login-form-forgot" href="">Forgot password</a> */}
-            <Button type="primary" htmlType="submit" className="login-form-button">
+            <Button type="primary" htmlType="submit" className="login-form-button" block>
               Log in
             </Button>
           </FormItem>
@@ -46,5 +49,31 @@ import {
   }
   
 const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
-  
-export default WrappedNormalLoginForm;
+
+
+const mapStateToProps = state => ({
+  ...state
+});
+
+
+
+
+const mapDispatchToProps = dispatch => ({
+  login: bindActionCreators(loginUser, dispatch),
+  // refresh: bindActionCreators(refreshUser, dispatch)
+
+});
+
+
+
+
+//  const mapDispatchToProps = dispatch => ({
+//   getUser: () => dispatch(getUser())
+//  })
+
+const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(WrappedNormalLoginForm)
+const RouteApp = withRouter(ConnectApp)
+
+export default RouteApp;
+
+// export default WrappedNormalLoginForm;

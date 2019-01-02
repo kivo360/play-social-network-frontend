@@ -9,7 +9,7 @@ class AdaptiveContainer extends PureComponent {
   render(){
     return (
       <div style={{paddingTop:"2rem", paddingDown:"2rem"}}>
-        <Row gutter={24}>
+        <Row gutter={24} style={{marginRight: 0, marginLeft:0}}>
             <Col xs={1} sm={4} md={2} lg={4} xl={3}></Col>
             <Col 
               xs={22} sm={16} md={20} lg={16} xl={18}

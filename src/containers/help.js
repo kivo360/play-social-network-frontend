@@ -8,18 +8,8 @@ import { NubitCard } from '../components/posts/card';
 import view from '../redux/slices/views';
 import decisions from '../redux/slices/userDecisions';
 import { refreshUser } from '../redux/actions/calls/user';
-import { fetchHomePosts, fetchHomeTrendingPosts } from '../redux/actions/calls/lists';
-
-import axios from 'axios';
 
 import AccountList from '../components/account/accountList';
-const apiUrl = 'http://localhost:8000';
-
-const instance = axios.create({
-    baseURL: apiUrl
-});
-
-instance.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 
 
 const tabListNoTitle = [{
@@ -35,7 +25,7 @@ const tabListNoTitle = [{
 
 
 
-class Homes extends PureComponent {
+class Help extends PureComponent {
   constructor(props){
     super(props);
 
@@ -45,63 +35,15 @@ class Homes extends PureComponent {
       loading: false,
       // Get the welcome visibility from props
       isVisibleWelcome: this.props.dInfo.viewWelcome,
-      homeTab: '',
-      placeholderItems: [
-        {
-            url: "https://images.unsplash.com/photo-1543699454-f1acfec4adb4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9168756d4728fa1a08cd01503a14e3e7&auto=format&fit=crop&w=634&q=80",
-            avatar: "https://farm7.staticflickr.com/6092/6227418584_d5883b0948.jpg",
-            title: "Card title 1",
-            description: "This is the description 1",
-            postId: "1df1eeea-e810-4a85-8f72-9ff748785300"
-        },
-        {
-            url: "https://images.unsplash.com/photo-1543521891-37e42f3ac7bc?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e12096e4152ff85eb9a0e627cbc31108&auto=format&fit=crop&w=1350&q=80",
-            avatar: "https://farm7.staticflickr.com/6092/6227418584_d5883b0948.jpg",
-            title: "Card title 2",
-            description: "This is the description 2",
-            postId: "2909f882-85f1-4423-a5a4-e064e2f9535c"
-        },
-        {
-            url: "https://images.unsplash.com/photo-1543732967-1311a61777d9?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=791d33d883e6376eacd85e052016297b&auto=format&fit=crop&w=1350&q=80",
-            avatar: "https://farm7.staticflickr.com/6092/6227418584_d5883b0948.jpg",
-            title: "Card title 3",
-            description: "This is the description 3",
-            postId: "6f20d3fe-ea8f-42af-b4a9-7b6b27e5516f"
-        },
-        {
-            url: "https://images.unsplash.com/photo-1543716627-839b54c40519?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=945402d0832181236e72ad5658c0f340&auto=format&fit=crop&w=1868&q=80",
-            avatar: "https://farm7.staticflickr.com/6092/6227418584_d5883b0948.jpg",
-            title: "Card title 4",
-            description: "This is the description 4",
-            postId: "c68f3c9f-c7c3-49d1-bb67-ac35a0644263"
-        },
-        {
-            url: "https://images.unsplash.com/photo-1543709508-c6c0f5f70cb7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7dd93cb78ef40b446c4f8847bb63fb9f&auto=format&fit=crop&w=1905&q=80",
-            avatar: "https://farm7.staticflickr.com/6092/6227418584_d5883b0948.jpg",
-            title: "Card title 5",
-            description: "This is the description 5",
-            postId: "bd71f753-45bf-4ac4-9e1e-22bdcfa56d63"
-        },
-        {
-            url: "https://images.unsplash.com/photo-1543686465-5caa01f6b13f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=ce13c249ee27e7c8b0ba721f51ce1114&auto=format&fit=crop&w=1355&q=80",
-            avatar: "https://farm7.staticflickr.com/6092/6227418584_d5883b0948.jpg",
-            title: "Card title 6",
-            description: "This is the description 6",
-            postId: "3b5752bd-76aa-4464-876f-7e2b639549f0"
-        }
-      ]
+      homeTab: ''
     }
     this.props.views.clearPostTab()
-    this.props.views.setCurrentView("home")
-    this.props.fetchHomeNew()
-    // if(this.props.views){
-
-    // }
-    // this.props.refresh(this.props.user.token);
+    this.props.views.setCurrentView("help")
+    this.props.refresh()
   }
 
   updateAllStates(nextProps){
-    this.setState({ isVisibleWelcome: nextProps.dInfo.viewWelcome })
+    this.setState({isVisibleWelcome: nextProps.dInfo.viewWelcome})
   }
 
   closeOnClick(){
@@ -109,6 +51,7 @@ class Homes extends PureComponent {
     // Set the state using the updateAllStates
     // With persistance, the user will be able to permanently dismiss the welcome menu
     this.props.decisions.removeWelcome();
+    // this.setState({isVisibleWelcome: false})
   }
 
   clickSignup(){
@@ -185,14 +128,9 @@ class Homes extends PureComponent {
   render(){
     return (
       <div>
-        {this.renderWelcome()}
+        {/* {this.renderWelcome()} */}
         <AdaptiveContainer>
-            <Card
-              tabList={tabListNoTitle}
-              onTabChange={this.onTabChange}
-            >
-              <AccountList item_list={this.props.viewInfo.homeContent.newPosts}/>
-            </Card>
+            <h1>Help page :)</h1>
         </AdaptiveContainer>
 
     </div>
@@ -212,9 +150,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   views: bindActionCreators(view.actions, dispatch),
   decisions: bindActionCreators(decisions.actions, dispatch),
-  refresh: bindActionCreators(refreshUser, dispatch),
-  fetchHomeNew: bindActionCreators(fetchHomePosts, dispatch),
-  fetchHomeTrend: bindActionCreators(fetchHomeTrendingPosts, dispatch)
+  refresh: bindActionCreators(refreshUser, dispatch)
+
  })
  
 
@@ -224,8 +161,8 @@ const mapDispatchToProps = dispatch => ({
 //   getUser: () => dispatch(getUser())
 //  })
  
-const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(Homes)
+const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(Help)
 const RouteApp = withRouter(ConnectApp)
 
-export const Home = RouteApp;
+export default RouteApp;
 //  Home

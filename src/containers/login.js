@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import view from '../redux/slices/views';
+import { refreshUser } from '../redux/actions/calls/user';
+
 
 // import { complexAction } from '../redux/actions/complexActions';
 
@@ -24,6 +26,9 @@ function handleChange(value) {
   console.log(`selected ${value}`);
 }
 
+
+// TODO: Add a next page to enter a bunch of account information for the first time. 
+// TODO: Use the information saved in the token to recognize what needs to be sent in to the user
 const RegisterPage = () => {
   return (
     <div>
@@ -69,17 +74,22 @@ class Login extends PureComponent {
     super(props);
     this.props.views.clearPostTab()
     this.props.views.setCurrentView("login")
+
+    
     // this.props.complexAction();
     // console.log(props)
     // Update the current page using redux
-
+    if(this.props.user.userSet === true){
+      this.props.history.push("/")
+    }
   }
 
   
 
   componentWillUpdate(nextProps, nextState){
-    console.log(nextProps);
-    console.log(nextState);
+    if(nextProps.user.userSet === true){
+      this.props.history.push("/")
+    }
   }
 
 
@@ -111,7 +121,9 @@ const mapStateToProps = state => ({
  })
 
  const mapDispatchToProps = dispatch => ({
-  views: bindActionCreators(view.actions, dispatch) 
+  views: bindActionCreators(view.actions, dispatch),
+  refresh: bindActionCreators(refreshUser, dispatch)
+
  })
  
  

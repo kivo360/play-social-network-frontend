@@ -222,6 +222,8 @@ class RichTextExample extends React.Component {
    */
 
   onChange = ({ value }) => {
+    this.props.reflect(value.toJSON())
+    // console.log(value.toJSON());
     this.setState({ value })
   }
 

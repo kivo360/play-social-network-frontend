@@ -21,6 +21,13 @@ export const NubitCover = (url) => {
 )}
 
 
+export const LikeAction = () => {
+    // This is the Like Action for the Nubit Card
+    return (
+        <Icon type="heart" />
+    )
+}
+
 
 
 export class NubitCard extends PureComponent {
@@ -32,7 +39,7 @@ export class NubitCard extends PureComponent {
                 <Card
                     style={{ width: "100%", marginBottom:"1rem" }}
                     cover={NubitCover(url)}
-                    actions={[<Icon type="heart" />, <Icon type="message" />]}
+                    actions={[LikeAction(), <Icon type="message" />]}
                     hoverable
                 >
                     <Meta

@@ -1,21 +1,32 @@
+import { Button, Form, Icon, Input, Row, Col } from 'antd';
 import React from 'react';
-import {
-    Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete,
-  } from 'antd';
+import { connect } from 'react-redux';
+import { withRouter} from 'react-router-dom';
+import { bindActionCreators } from 'redux';
+
+import { registerUser } from '../../redux/actions/calls/user';
+
+const FormItem = Form.Item;
   
-  const FormItem = Form.Item;
-  
-  class RegistrationForm extends React.Component {
-    state = {
-      confirmDirty: false,
-      autoCompleteResult: [],
-    };
-  
+class RegistrationForm extends React.Component {
+    
+    
+    constructor(props){
+      super(props);
+      this.state = {
+        confirmDirty: false,
+        autoCompleteResult: [],
+      };
+      console.log(props);
+    }
+
     handleSubmit = (e) => {
       e.preventDefault();
       this.props.form.validateFieldsAndScroll((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values);
+          // console.log('Received values of form: ', values);
+          this.props.register(values);
+          // Dispatch register action from here.
         }
       });
     }
@@ -71,20 +82,26 @@ import {
       };
       return (
         <Form onSubmit={this.handleSubmit} className="login-form">
+        <Row gutter={16}>
+          <Col span={24}>
           <FormItem>
-            {getFieldDecorator('userName', {
+            {getFieldDecorator('username', {
               rules: [{ required: true, message: 'Please input your username!' }],
             })(
               <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
             )}
           </FormItem>
-          <FormItem>
-            {getFieldDecorator('email', {
-              rules: [{ required: true, message: 'Please input your email' }],
-            })(
-              <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
-            )}
-          </FormItem>
+          </Col>
+          <Col span={24}>
+            <FormItem>
+              {getFieldDecorator('email', {
+                rules: [{ required: true, message: 'Please input your email' }],
+              })(
+                <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Email" />
+              )}
+            </FormItem>
+          </Col>
+          <Col span={10}>
           <FormItem>
             {getFieldDecorator('password', {
               rules: [{ required: true, message: 'Please input your Password!' }, {
@@ -94,6 +111,8 @@ import {
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
             )}
           </FormItem>
+          </Col>
+          <Col span={10}>
           <FormItem>
             {getFieldDecorator('confirm', {
               rules: [{ required: true, message: 'Please input your confirmation password!' }, {
@@ -103,6 +122,8 @@ import {
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Confirm" />
             )}
           </FormItem>
+          </Col>
+          <Col span={4}>
           <FormItem>
             {getFieldDecorator('pin', {
               rules: [{ required: true, message: 'Please input your Pin Number!' }],
@@ -110,19 +131,42 @@ import {
               <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Pin" />
             )}
           </FormItem>
-
-          <FormItem>
-            
-            {/* <a className="login-form-forgot" href="">Forgot password</a> */}
-            <Button type="primary" htmlType="submit" className="login-form-button">
+          </Col>
+          <Col span={24}>
+          <Button type="primary" htmlType="submit" className="login-form-button" block>
               Register
             </Button>
-          </FormItem>
+          </Col>
+        </Row>
         </Form>
       );
     }
   }
   
-  const WrappedRegistrationForm = Form.create()(RegistrationForm);
-  
-export default WrappedRegistrationForm;
+const WrappedRegistrationForm = Form.create()(RegistrationForm);
+
+
+const mapStateToProps = state => ({
+  ...state
+});
+
+
+
+
+const mapDispatchToProps = dispatch => ({
+  register: bindActionCreators(registerUser, dispatch)
+});
+
+
+
+
+//  const mapDispatchToProps = dispatch => ({
+//   getUser: () => dispatch(getUser())
+//  })
+
+const ConnectApp = connect(mapStateToProps, mapDispatchToProps)(WrappedRegistrationForm)
+const RouteApp = withRouter(ConnectApp)
+
+export default RouteApp;
+
+// export default WrappedRegistrationForm;
